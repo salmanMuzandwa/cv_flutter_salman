@@ -1,94 +1,82 @@
-# CV Flutter — Chuma Muzandwa Salman
+# CV Flutter – Chuma Salman
 
-Application mobile Flutter présentant mon CV, ma famille et mes coordonnées.
-L'accès à l'application se fait via une page de connexion.
+Petite application mobile réalisée avec Flutter dans le cadre d'un travail pratique. Elle permet de consulter mon CV, de découvrir ma famille et de retrouver mes coordonnées.
 
-## 📋 Fonctionnalités
+## Présentation
 
-- 🔐 **Page de connexion** avec identifiant et mot de passe
-- 📄 **Page CV** : photo, nom, titre, formation, expériences, compétences, langues
-- 👨‍👩‍👧‍👦 **Page Famille** : membres de la famille (nom, photo, lien de parenté, profession)
-- 📞 **Page Contact** : téléphone, e-mail, adresse et réseaux sociaux (cliquables)
-- 🧭 **Navigation** via Drawer (menu latéral) + BottomNavigationBar ( barre du bas)
-- 🎨 Interface professionnelle avec thème teal
+L'application contient quatre pages principales :
 
-## 🔑 Identifiants de connexion
+- **Connexion :** accès à l'application avec identifiant et mot de passe.
+- **Accueil :** présentation de mon profil, ma formation, mes expériences et mes compétences.
+- **Famille :** présentation des membres de ma famille.
+- **Contact :** mes coordonnées et mes réseaux sociaux.
 
-| Champ | Valeur |
-|-------|--------|
-| Identifiant | `chumasalman0@gmail.com` |
-| Mot de passe | `GOMA2026` |
+## Technologies utilisées
 
-## 📸 Captures d'écran
+- Flutter
+- Dart
+- Visual Studio Code
+- Git et GitHub
+
+## Captures d'écran
 
 ### 1. Page de connexion
-![Page de connexion](screenshots/01_login.jpg)
+![Connexion](screenshots/login.png)
 
-### 2. Page CV (Accueil)
-![Page CV](screenshots/02_cv.jpg)
+### 2. Page d'accueil – Mon CV
+![Accueil](screenshots/accueil.png)
 
-### 3. Page Famille
-![Page Famille](screenshots/03_family.jpg)
+### 3. Page famille
+![Famille](screenshots/famille.png)
 
-### 4. Page Contact
-![Page Contact](screenshots/04_contact.jpg)
+### 4. Page contact
+![Contact](screenshots/contact.png)
 
-### 5. Menu latéral (Drawer)
-![Drawer](screenshots/05_drawer.jpg)
+## Accès à l'application
 
-## 🚀 Installation et exécution
+<details>
+<summary>Identifiants de connexion</summary>
 
-### Prérequis
-- Flutter SDK (3.x ou supérieur)
-- Android Studio / VS Code
-- Un émulateur Android ou un appareil physique
+- **E-mail :** chumasalman0@gmail.com
+- **Mot de passe :** GOMA2026
 
-### Étapes
+</details>
+
+## Installation
+
+Cloner le projet :
 
 ```bash
-# Cloner le dépôt
-git clone https://github.com/chumasalman/cv_flutter_salman.git
-cd cv_flutter_salman
+git clone https://github.com/VOTRE-PSEUDO/cv_flutter_chuma.git
+```
 
-# Installer les dépendances
+Entrer dans le dossier :
+
+```bash
+cd cv_flutter_chuma
+```
+
+Installer les dépendances :
+
+```bash
 flutter pub get
+```
 
-# Lancer l'application
+Lancer l'application :
+
+```bash
 flutter run
 ```
 
-### Générer l'APK
+## Dépôt GitHub
 
-```bash
-flutter build apk --release
-```
+[Voir le projet sur GitHub](https://github.com/VOTRE-PSEUDO/cv_flutter_chuma)
 
-L'APK se trouvera dans `build/app/outputs/flutter-apk/app-release.apk`.
+---
 
-## 🛠 Stack technique
+**Réalisé par Chuma Muzandwa Salman**
 
-- **Framework** : Flutter
-- **Langage** : Dart
-- **Dépendances** :
-  - `url_launcher` — pour lancer les appels, e-mails et liens web
-  - `cupertino_icons` — icônes iOS
+Année académique 2026.
+voila le capture d'ecran :
 
-## 📁 Structure du projet
-
-```
-lib/
-├── main.dart              # Point d'entrée, thème de l'application
-├── constants.dart         # Données du CV, couleurs, identifiants
-└── screens/
-    ├── login_page.dart    # Page de connexion
-    ├── main_shell.dart    # Squelette avec Drawer + BottomNavigationBar
-    ├── cv_page.dart       # Page CV
-    ├── family_page.dart   # Page Famille
-    └── contact_page.dart  # Page Contact
-```
-
-## 👤 Auteur
-
-**Chuma Muzandwa Salman** — Informaticien
-- 📧 chumasalman0@gmail.com
-- 📍 Goma, Nord-Kivu, RDC
+![alt text](<Capture d'écran 2026-11-20 115713.png>) ![alt text](<Capture d'écran 2026-11-20 115630.png>) ![alt text](<Capture d'écran 2026-11-20 115603.png>) ![alt text](<Capture d'écran 2026-11-20 115524.png>) ![alt text](<Capture d'écran 2026-11-20 114407.png>) ![alt text](<Capture d'écran 2026-11-20 114339.png>)

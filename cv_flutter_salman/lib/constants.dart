@@ -4,36 +4,39 @@ import 'package:flutter/material.dart';
 const String kLoginEmail = 'chumasalman0@gmail.com';
 const String kLoginPassword = 'GOMA2026';
 
-/// Palette de couleurs (teal professionnel, inspirée du CV)
+/// Palette de couleurs (bleu primaire #1B0BF4)
 class AppColors {
-  static const Color primary = Color(0xFF1B5E6B);
-  static const Color primaryDark = Color(0xFF0E3D47);
-  static const Color accent = Color(0xFF2D8B8F);
-  static const Color secondary = Color(0xFF3A9BA0);
-  static const Color light = Color(0xFFE0F2F1);
-  static const Color background = Color(0xFFF5F7F8);
+  static const Color primary = Color(0xFF1B0BF4);
+  static const Color primaryDark = Color(0xFF0F07A0);
+  static const Color accent = Color(0xFF4A3DFF);
+  static const Color secondary = Color(0xFF6C5CE7);
+  static const Color light = Color(0xFFE8E6FF);
+  static const Color background = Color(0xFFF7F8FA);
   static const Color card = Colors.white;
-  static const Color text = Color(0xFF1C2B2E);
-  static const Color textMuted = Color(0xFF5A6B6E);
-  static const Color divider = Color(0xFFD5E3E4);
+  static const Color text = Color(0xFF1A1A2E);
+  static const Color textMuted = Color(0xFF7A7A8C);
+  static const Color divider = Color(0xFFE5E5ED);
 }
 
-/// Informations personnelles du CV
+/// Informations personnelles du CV (modifiables à la volée)
 class CvData {
-  static const String name = 'CHUMA MUZANDWA SALMAN';
-  static const String title = 'Informaticien';
-  static const String about =
+  static String name = 'CHUMA MUZANDWA SALMAN';
+  static String title = 'Informaticien';
+  static String about =
       "Étudiant en systèmes informatiques et polyvalent, je possède de solides compétences en développement web (HTML, CSS, Bootstrap) et mobile (Flutter). Mon expertise s'étend également en administration réseaux et systèmes.";
 
-  static const String phone = '+243 973958240';
-  static const String phoneUri = '+243973958240';
-  static const String email = 'chumasalman0@gmail.com';
-  static const String location = 'RDC, Nord-Kivu / Goma';
+  static String phone = '+243 973958240';
+  static String phoneUri = '+243973958240';
+  static String email = 'chumasalman0@gmail.com';
+  static String location = 'RDC, Nord-Kivu / Goma';
 
-  static const String linkedinUrl = 'https://www.linkedin.com/in/chuma-salman';
-  static const String githubUrl = 'https://github.com/chumasalman';
+  static String linkedinUrl = 'https://www.linkedin.com/in/chuma-salman';
+  static String githubUrl = 'https://github.com/chumasalman';
 
-  static const List<String> competences = [
+  /// Chemin de l'avatar (asset local). Remplacer le fichier par sa propre photo.
+  static const String avatarPath = 'assets/images/profile.jpg';
+
+  static List<String> competences = [
     'Programmation web & mobile',
     'Administration réseau',
     'Gestion de projets',
@@ -42,9 +45,9 @@ class CvData {
     'Flutter / Dart',
   ];
 
-  static const List<String> languages = ['Français', 'Anglais'];
+  static List<String> languages = ['Français', 'Anglais'];
 
-  static const List<Map<String, String>> education = [
+  static List<Map<String, String>> education = [
     {
       'period': '2023 - 2027',
       'school': 'ISIG - GOMA',
@@ -53,7 +56,7 @@ class CvData {
     },
   ];
 
-  static const List<Map<String, String>> experiences = [
+  static List<Map<String, String>> experiences = [
     {
       'role': 'ADMINISTRATEUR RÉSEAU ET SYSTÈME',
       'tasks':
@@ -61,7 +64,7 @@ class CvData {
     },
   ];
 
-  static const List<Map<String, String>> formations = [
+  static List<Map<String, String>> formations = [
     {
       'date': 'Juillet 2023',
       'title': 'Certification en leadership',
@@ -79,7 +82,7 @@ class CvData {
     },
   ];
 
-  static const List<Map<String, String>> family = [
+  static List<Map<String, String>> family = [
     {'name': 'Muzandwa', 'relation': 'Père', 'job': 'Ingénieur'},
     {'name': 'Maman', 'relation': 'Mère', 'job': 'Enseignante'},
     {'name': 'Junior', 'relation': 'Frère', 'job': 'Étudiant'},

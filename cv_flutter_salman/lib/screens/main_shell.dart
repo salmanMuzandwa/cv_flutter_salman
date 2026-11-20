@@ -59,6 +59,7 @@ class _MainShellState extends State<MainShell> {
         backgroundColor: Colors.white,
         indicatorColor: AppColors.light,
         destinations: const [
+          // Icônes en outline (non remplies) par défaut, remplies quand sélectionnées
           NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
@@ -83,28 +84,30 @@ class _MainShellState extends State<MainShell> {
     return Drawer(
       child: Column(
         children: [
-          // En-tête du drawer
+          // En-tête du drawer avec photo de profil
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [AppColors.primary, AppColors.primaryDark],
               ),
             ),
-            accountName: const Text(
+            accountName: Text(
               CvData.name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: const TextStyle(
+                fontFamily: 'sans-serif',
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-            accountEmail: const Text(CvData.email),
+            accountEmail: Text(
+              CvData.email,
+              style: const TextStyle(fontFamily: 'sans-serif'),
+            ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: Text(
-                'CS',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
-              ),
+              backgroundImage: AssetImage(CvData.avatarPath),
+              onBackgroundImageError: (_, _) {},
+              child: const Icon(Icons.person, color: AppColors.primary),
             ),
           ),
           // Éléments du menu
@@ -113,10 +116,13 @@ class _MainShellState extends State<MainShell> {
                 color: _currentIndex == 0 ? AppColors.primary : null),
             title: Text('Mon CV',
                 style: TextStyle(
-                    color:
-                        _currentIndex == 0 ? AppColors.primary : AppColors.text,
-                    fontWeight:
-                        _currentIndex == 0 ? FontWeight.bold : FontWeight.normal)),
+                    fontFamily: 'sans-serif',
+                    color: _currentIndex == 0
+                        ? AppColors.primary
+                        : AppColors.text,
+                    fontWeight: _currentIndex == 0
+                        ? FontWeight.bold
+                        : FontWeight.normal)),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(0);
@@ -127,10 +133,13 @@ class _MainShellState extends State<MainShell> {
                 color: _currentIndex == 1 ? AppColors.primary : null),
             title: Text('Ma Famille',
                 style: TextStyle(
-                    color:
-                        _currentIndex == 1 ? AppColors.primary : AppColors.text,
-                    fontWeight:
-                        _currentIndex == 1 ? FontWeight.bold : FontWeight.normal)),
+                    fontFamily: 'sans-serif',
+                    color: _currentIndex == 1
+                        ? AppColors.primary
+                        : AppColors.text,
+                    fontWeight: _currentIndex == 1
+                        ? FontWeight.bold
+                        : FontWeight.normal)),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(1);
@@ -141,10 +150,13 @@ class _MainShellState extends State<MainShell> {
                 color: _currentIndex == 2 ? AppColors.primary : null),
             title: Text('Contact',
                 style: TextStyle(
-                    color:
-                        _currentIndex == 2 ? AppColors.primary : AppColors.text,
-                    fontWeight:
-                        _currentIndex == 2 ? FontWeight.bold : FontWeight.normal)),
+                    fontFamily: 'sans-serif',
+                    color: _currentIndex == 2
+                        ? AppColors.primary
+                        : AppColors.text,
+                    fontWeight: _currentIndex == 2
+                        ? FontWeight.bold
+                        : FontWeight.normal)),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(2);
@@ -155,7 +167,8 @@ class _MainShellState extends State<MainShell> {
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.redAccent),
             title: const Text('Déconnexion',
-                style: TextStyle(color: Colors.redAccent)),
+                style: TextStyle(
+                    fontFamily: 'sans-serif', color: Colors.redAccent)),
             onTap: () {
               Navigator.pop(context);
               _logout();

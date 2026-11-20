@@ -1,8 +1,141 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-class CvPage extends StatelessWidget {
+class CvPage extends StatefulWidget {
   const CvPage({super.key});
+
+  @override
+  State<CvPage> createState() => _CvPageState();
+}
+
+class _CvPageState extends State<CvPage> {
+  // Contrôleurs pour l'édition
+  final _nameController = TextEditingController(text: CvData.name);
+  final _titleController = TextEditingController(text: CvData.title);
+  final _aboutController = TextEditingController(text: CvData.about);
+  final _locationController = TextEditingController(text: CvData.location);
+  final _phoneController = TextEditingController(text: CvData.phone);
+  final _emailController = TextEditingController(text: CvData.email);
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _titleController.dispose();
+    _aboutController.dispose();
+    _locationController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  /// Ouvre la boîte de dialogue d'édition des informations du CV
+  void _openEditDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) {
+          return AlertDialog(
+            title: const Text(
+              'Modifier mes informations',
+              style: TextStyle(
+                fontFamily: 'sans-serif',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nom complet',
+                      prefixIcon: Icon(Icons.person_outline),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Titre / Profession',
+                      prefixIcon: Icon(Icons.work_outline),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _locationController,
+                    decoration: const InputDecoration(
+                      labelText: 'Localisation',
+                      prefixIcon: Icon(Icons.location_on_outlined),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _phoneController,
+                    decoration: const InputDecoration(
+                      labelText: 'Téléphone',
+                      prefixIcon: Icon(Icons.phone_outlined),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: 'E-mail',
+                      prefixIcon: Icon(Icons.email_outlined),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _aboutController,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      labelText: 'À propos de moi',
+                      prefixIcon: Icon(Icons.article_outlined),
+                      alignLabelWithHint: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Annuler'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    CvData.name = _nameController.text.trim();
+                    CvData.title = _titleController.text.trim();
+                    CvData.location = _locationController.text.trim();
+                    CvData.phone = _phoneController.text.trim();
+                    CvData.phoneUri = _phoneController.text
+                        .trim()
+                        .replaceAll(' ', '')
+                        .replaceAll('-', '');
+                    CvData.email = _emailController.text.trim();
+                    CvData.about = _aboutController.text.trim();
+                  });
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Informations mises à jour avec succès.'),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: AppColors.primary,
+                    ),
+                  );
+                },
+                child: const Text('Enregistrer'),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +152,8 @@ class CvPage extends StatelessWidget {
             icon: Icons.school_outlined,
             title: 'Formation',
             child: Column(
-              children: CvData.education
-                  .map((e) => _EducationCard(edu: e))
-                  .toList(),
+              children:
+                  CvData.education.map((e) => _EducationCard(edu: e)).toList(),
             ),
           ),
           const SizedBox(height: 16),
@@ -66,31 +198,89 @@ class CvPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Avatar
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withValues(alpha: 0.2),
-              border: Border.all(color: Colors.white, width: 3),
-            ),
-            child: const Center(
-              child: Text(
-                'CS',
-                style: TextStyle(
+          // Icône crayon au-dessus de l'avatar
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: _openEditDialog,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.edit_outlined,
                   color: Colors.white,
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
+                  size: 20,
                 ),
               ),
             ),
           ),
+          // Avatar avec photo
+          GestureDetector(
+            onTap: _openEditDialog,
+            child: Stack(
+              children: [
+                Container(
+                  width: 104,
+                  height: 104,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      CvData.avatarPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          child: const Center(
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 48,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                // Badge crayon sur l'avatar
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 14),
-          const Text(
+          Text(
             CvData.name,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
+              fontFamily: 'sans-serif',
               color: Colors.white,
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -103,9 +293,10 @@ class CvPage extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text(
+            child: Text(
               CvData.title,
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: const TextStyle(
+                  fontFamily: 'sans-serif', color: Colors.white, fontSize: 14),
             ),
           ),
           const SizedBox(height: 16),
@@ -116,7 +307,10 @@ class CvPage extends StatelessWidget {
                   color: Colors.white70, size: 16),
               const SizedBox(width: 4),
               Text(CvData.location,
-                  style: const TextStyle(color: Colors.white70, fontSize: 13)),
+                  style: const TextStyle(
+                      fontFamily: 'sans-serif',
+                      color: Colors.white70,
+                      fontSize: 13)),
             ],
           ),
         ],
@@ -131,7 +325,11 @@ class CvPage extends StatelessWidget {
       child: Text(
         CvData.about,
         style: const TextStyle(
-            color: AppColors.textMuted, height: 1.5, fontSize: 14),
+          fontFamily: 'sans-serif',
+          color: AppColors.textMuted,
+          height: 1.5,
+          fontSize: 14,
+        ),
         textAlign: TextAlign.justify,
       ),
     );
@@ -146,9 +344,12 @@ class CvPage extends StatelessWidget {
         runSpacing: 8,
         children: CvData.competences
             .map((s) => Chip(
-                  label: Text(s, style: const TextStyle(fontSize: 13)),
+                  label: Text(s,
+                      style: const TextStyle(
+                          fontFamily: 'sans-serif', fontSize: 13)),
                   backgroundColor: AppColors.light,
-                  labelStyle: const TextStyle(color: AppColors.primaryDark),
+                  labelStyle:
+                      const TextStyle(color: AppColors.primaryDark),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                     side: BorderSide.none,
@@ -172,7 +373,9 @@ class CvPage extends StatelessWidget {
                       const Icon(Icons.check_circle,
                           color: AppColors.accent, size: 18),
                       const SizedBox(width: 6),
-                      Text(l, style: const TextStyle(fontSize: 15)),
+                      Text(l,
+                          style: const TextStyle(
+                              fontFamily: 'sans-serif', fontSize: 15)),
                     ],
                   ),
                 ))
@@ -200,6 +403,7 @@ class CvPage extends StatelessWidget {
                   child: Text(
                     title,
                     style: const TextStyle(
+                      fontFamily: 'sans-serif',
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,
@@ -243,19 +447,26 @@ class _EducationCard extends StatelessWidget {
               children: [
                 Text(edu['period']!,
                     style: const TextStyle(
+                        fontFamily: 'sans-serif',
                         color: AppColors.accent,
                         fontWeight: FontWeight.bold,
                         fontSize: 13)),
                 const SizedBox(height: 2),
                 Text(edu['school']!,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15)),
+                        fontFamily: 'sans-serif',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15)),
                 const SizedBox(height: 2),
                 Text(edu['degree']!,
-                    style: const TextStyle(color: AppColors.textMuted)),
+                    style: const TextStyle(
+                        fontFamily: 'sans-serif',
+                        color: AppColors.textMuted)),
                 Text(edu['detail']!,
                     style: const TextStyle(
-                        color: AppColors.textMuted, fontSize: 12)),
+                        fontFamily: 'sans-serif',
+                        color: AppColors.textMuted,
+                        fontSize: 12)),
               ],
             ),
           ),
@@ -276,13 +487,17 @@ class _ExperienceCard extends StatelessWidget {
       children: [
         Text(exp['role']!,
             style: const TextStyle(
+                fontFamily: 'sans-serif',
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
                 color: AppColors.primaryDark)),
         const SizedBox(height: 8),
         Text(exp['tasks']!,
             style: const TextStyle(
-                color: AppColors.textMuted, height: 1.6, fontSize: 13.5)),
+                fontFamily: 'sans-serif',
+                color: AppColors.textMuted,
+                height: 1.6,
+                fontSize: 13.5)),
       ],
     );
   }
@@ -308,15 +523,20 @@ class _FormationCard extends StatelessWidget {
               children: [
                 Text(f['date']!,
                     style: const TextStyle(
+                        fontFamily: 'sans-serif',
                         color: AppColors.accent,
                         fontWeight: FontWeight.bold,
                         fontSize: 13)),
                 Text(f['title']!,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 14)),
+                        fontFamily: 'sans-serif',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14)),
                 Text(f['org']!,
                     style: const TextStyle(
-                        color: AppColors.textMuted, fontSize: 12.5)),
+                        fontFamily: 'sans-serif',
+                        color: AppColors.textMuted,
+                        fontSize: 12.5)),
               ],
             ),
           ),

@@ -69,6 +69,7 @@ class _FamilyMemberCard extends StatelessWidget {
                 child: Text(
                   _initiales(name),
                   style: const TextStyle(
+                    fontFamily: 'sans-serif',
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -82,6 +83,7 @@ class _FamilyMemberCard extends StatelessWidget {
               name,
               textAlign: TextAlign.center,
               style: const TextStyle(
+                fontFamily: 'sans-serif',
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
                 color: AppColors.primaryDark,
@@ -98,6 +100,7 @@ class _FamilyMemberCard extends StatelessWidget {
               child: Text(
                 relation,
                 style: const TextStyle(
+                  fontFamily: 'sans-serif',
                   color: AppColors.primary,
                   fontSize: 11.5,
                   fontWeight: FontWeight.w600,
@@ -117,6 +120,7 @@ class _FamilyMemberCard extends StatelessWidget {
                     job,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
+                      fontFamily: 'sans-serif',
                       color: AppColors.textMuted,
                       fontSize: 12,
                     ),
