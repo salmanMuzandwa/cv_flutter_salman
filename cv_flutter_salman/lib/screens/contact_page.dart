@@ -5,11 +5,78 @@ import '../constants.dart';
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
 
-  Future<void> _launch(String url) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'Impossible d\'ouvrir $url';
+  Future<void> _launch(BuildContext context, String url) async {
+    try {
+      final launched = await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && context.mounted) {
+        _showError(context, 'Impossible d’ouvrir cette action. Réessayez.');
+      }
+    } catch (_) {
+      if (context.mounted) {
+        _showError(context, 'Impossible d’ouvrir cette action. Réessayez.');
+      }
     }
+  }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
+    );
+  }
+
+  Future<void> _showContactDetails({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required String value,
+    String? actionLabel,
+    String? url,
+  }) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: Icon(icon, color: AppColors.primary, size: 32),
+        title: Text(title),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectableText(
+              value,
+              style: const TextStyle(
+                color: AppColors.text,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            if (url != null) ...[
+              const SizedBox(height: 12),
+              Text(
+                'Vérifiez cette information avant de continuer.',
+                style: TextStyle(color: AppColors.textMuted),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(url == null ? 'Fermer' : 'Annuler'),
+          ),
+          if (url != null)
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(actionLabel!),
+            ),
+        ],
+      ),
+    );
+    if (confirmed != true || url == null || !context.mounted) return;
+
+    await _launch(context, url);
   }
 
   @override
@@ -158,42 +225,82 @@ class ContactPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Liste des paramètres (style Airbnb)
           _SettingTile(
             icon: Icons.person_outline,
             title: 'Personal information',
-            onTap: () {},
+            subtitle: CvData.name,
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.person_outline,
+              title: 'Personal information',
+              value: '${CvData.name}\n${CvData.title}',
+            ),
           ),
           _SettingTile(
             icon: Icons.phone_outlined,
             title: 'Téléphone',
             subtitle: CvData.phone,
-            onTap: () => _launch('tel:${CvData.phoneUri}'),
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.phone_outlined,
+              title: 'Téléphone',
+              value: CvData.phone,
+              actionLabel: 'Appeler',
+              url: 'tel:${CvData.phoneUri}',
+            ),
           ),
           _SettingTile(
             icon: Icons.email_outlined,
             title: 'E-mail',
             subtitle: CvData.email,
-            onTap: () => _launch('mailto:${CvData.email}'),
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.email_outlined,
+              title: 'E-mail',
+              value: CvData.email,
+              actionLabel: 'Envoyer',
+              url: 'mailto:${CvData.email}',
+            ),
           ),
           _SettingTile(
             icon: Icons.location_on_outlined,
             title: 'Adresse',
             subtitle: CvData.location,
-            onTap: () => _launch(
-                'https://www.google.com/maps/search/?api=1&query=Goma+Nord-Kivu+RDC'),
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.location_on_outlined,
+              title: 'Adresse',
+              value: CvData.location,
+              actionLabel: 'Ouvrir la carte',
+              url:
+                  'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(CvData.location)}',
+            ),
           ),
           _SettingTile(
             icon: Icons.work_outline,
             title: 'LinkedIn',
-            subtitle: 'Voir le profil LinkedIn',
-            onTap: () => _launch(CvData.linkedinUrl),
+            subtitle: CvData.linkedinUrl,
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.work_outline,
+              title: 'LinkedIn',
+              value: CvData.linkedinUrl,
+              actionLabel: 'Ouvrir LinkedIn',
+              url: CvData.linkedinUrl,
+            ),
           ),
           _SettingTile(
             icon: Icons.code_outlined,
             title: 'GitHub',
-            subtitle: 'Voir le profil GitHub',
-            onTap: () => _launch(CvData.githubUrl),
+            subtitle: CvData.githubUrl,
+            onTap: () => _showContactDetails(
+              context: context,
+              icon: Icons.code_outlined,
+              title: 'GitHub',
+              value: CvData.githubUrl,
+              actionLabel: 'Ouvrir GitHub',
+              url: CvData.githubUrl,
+            ),
           ),
 
           const SizedBox(height: 24),
@@ -201,9 +308,10 @@ class ContactPage extends StatelessWidget {
             child: Text(
               '© 2026 Chuma Muzandwa Salman',
               style: TextStyle(
-                  fontFamily: 'sans-serif',
-                  color: AppColors.textMuted,
-                  fontSize: 12),
+                fontFamily: 'sans-serif',
+                color: AppColors.textMuted,
+                fontSize: 12,
+              ),
             ),
           ),
         ],

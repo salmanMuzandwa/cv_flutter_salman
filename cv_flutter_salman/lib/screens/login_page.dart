@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
+import '../services/api_service.dart';
 import 'main_shell.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,8 +14,10 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _apiService = ApiService();
   bool _obscurePassword = true;
   bool _isLoading = false;
+  String? _errorMessage;
 
   @override
   void dispose() {
@@ -23,34 +26,33 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> _login() async {
+    if (_isLoading || !(_formKey.currentState?.validate() ?? false)) return;
 
-    setState(() => _isLoading = true);
-
-    // Simulation d'une légère attente puis vérification
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (!mounted) return;
-      setState(() => _isLoading = false);
-
-      final email = _emailController.text.trim();
-      final password = _passwordController.text.trim();
-
-      if (email == kLoginEmail && password == kLoginPassword) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const MainShell()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Identifiant ou mot de passe incorrect.'),
-            backgroundColor: Colors.redAccent,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      }
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
     });
+
+    try {
+      await _apiService.seConnecter(
+        _emailController.text,
+        _passwordController.text,
+      );
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainShell()),
+      );
+    } on ApiException catch (error) {
+      if (mounted) setState(() => _errorMessage = error.message);
+    } catch (_) {
+      if (mounted) {
+        setState(() => _errorMessage = 'Une erreur inattendue est survenue.');
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -124,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Identifiant
                     TextFormField(
                       controller: _emailController,
+                      enabled: !_isLoading,
                       keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(fontFamily: 'sans-serif'),
                       decoration: const InputDecoration(
@@ -141,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Mot de passe
                     TextFormField(
                       controller: _passwordController,
+                      enabled: !_isLoading,
                       obscureText: _obscurePassword,
                       style: const TextStyle(fontFamily: 'sans-serif'),
                       decoration: InputDecoration(
@@ -153,7 +157,8 @@ class _LoginPageState extends State<LoginPage> {
                             color: AppColors.textMuted,
                           ),
                           onPressed: () => setState(
-                              () => _obscurePassword = !_obscurePassword),
+                            () => _obscurePassword = !_obscurePassword,
+                          ),
                         ),
                       ),
                       validator: (value) {
@@ -164,6 +169,23 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     const SizedBox(height: 22),
+
+                    if (_errorMessage != null) ...[
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade50,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.red.shade200),
+                        ),
+                        child: Text(
+                          _errorMessage!,
+                          style: TextStyle(color: Colors.red.shade900),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                    ],
 
                     // Bouton de connexion
                     SizedBox(
@@ -188,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               )
                             : const Text(
-                                'Log in',
+                                'Se connecter',
                                 style: TextStyle(
                                   fontFamily: 'sans-serif',
                                   fontSize: 16,

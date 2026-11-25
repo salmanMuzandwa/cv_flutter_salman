@@ -15,17 +15,9 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    CvPage(),
-    FamilyPage(),
-    ContactPage(),
-  ];
+  final List<Widget> _pages = const [CvPage(), FamilyPage(), ContactPage()];
 
-  final List<String> _titles = const [
-    'Mon CV',
-    'Ma Famille',
-    'Contact',
-  ];
+  final List<String> _titles = const ['Mon CV', 'Ma Famille', 'Contact'];
 
   void _onItemTapped(int index) {
     setState(() => _currentIndex = index);
@@ -112,51 +104,60 @@ class _MainShellState extends State<MainShell> {
           ),
           // Éléments du menu
           ListTile(
-            leading: Icon(Icons.person,
-                color: _currentIndex == 0 ? AppColors.primary : null),
-            title: Text('Mon CV',
-                style: TextStyle(
-                    fontFamily: 'sans-serif',
-                    color: _currentIndex == 0
-                        ? AppColors.primary
-                        : AppColors.text,
-                    fontWeight: _currentIndex == 0
-                        ? FontWeight.bold
-                        : FontWeight.normal)),
+            leading: Icon(
+              Icons.person,
+              color: _currentIndex == 0 ? AppColors.primary : null,
+            ),
+            title: Text(
+              'Mon CV',
+              style: TextStyle(
+                fontFamily: 'sans-serif',
+                color: _currentIndex == 0 ? AppColors.primary : AppColors.text,
+                fontWeight: _currentIndex == 0
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(0);
             },
           ),
           ListTile(
-            leading: Icon(Icons.family_restroom,
-                color: _currentIndex == 1 ? AppColors.primary : null),
-            title: Text('Ma Famille',
-                style: TextStyle(
-                    fontFamily: 'sans-serif',
-                    color: _currentIndex == 1
-                        ? AppColors.primary
-                        : AppColors.text,
-                    fontWeight: _currentIndex == 1
-                        ? FontWeight.bold
-                        : FontWeight.normal)),
+            leading: Icon(
+              Icons.family_restroom,
+              color: _currentIndex == 1 ? AppColors.primary : null,
+            ),
+            title: Text(
+              'Ma Famille',
+              style: TextStyle(
+                fontFamily: 'sans-serif',
+                color: _currentIndex == 1 ? AppColors.primary : AppColors.text,
+                fontWeight: _currentIndex == 1
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(1);
             },
           ),
           ListTile(
-            leading: Icon(Icons.contact_phone,
-                color: _currentIndex == 2 ? AppColors.primary : null),
-            title: Text('Contact',
-                style: TextStyle(
-                    fontFamily: 'sans-serif',
-                    color: _currentIndex == 2
-                        ? AppColors.primary
-                        : AppColors.text,
-                    fontWeight: _currentIndex == 2
-                        ? FontWeight.bold
-                        : FontWeight.normal)),
+            leading: Icon(
+              Icons.contact_phone,
+              color: _currentIndex == 2 ? AppColors.primary : null,
+            ),
+            title: Text(
+              'Contact',
+              style: TextStyle(
+                fontFamily: 'sans-serif',
+                color: _currentIndex == 2 ? AppColors.primary : AppColors.text,
+                fontWeight: _currentIndex == 2
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
               _onItemTapped(2);
@@ -166,9 +167,13 @@ class _MainShellState extends State<MainShell> {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.redAccent),
-            title: const Text('Déconnexion',
-                style: TextStyle(
-                    fontFamily: 'sans-serif', color: Colors.redAccent)),
+            title: const Text(
+              'Déconnexion',
+              style: TextStyle(
+                fontFamily: 'sans-serif',
+                color: Colors.redAccent,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
               _logout();

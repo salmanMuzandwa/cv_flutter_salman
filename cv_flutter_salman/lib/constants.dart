@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Identifiants de connexion
-const String kLoginEmail = 'chumasalman0@gmail.com';
-const String kLoginPassword = 'GOMA2026';
-
 /// Palette de couleurs (bleu primaire #1B0BF4)
 class AppColors {
   static const Color primary = Color(0xFF1B0BF4);
@@ -34,7 +30,7 @@ class CvData {
   static String githubUrl = 'https://github.com/chumasalman';
 
   /// Chemin de l'avatar (asset local). Remplacer le fichier par sa propre photo.
-  static const String avatarPath = 'assets/images/profile.jpg';
+  static const String avatarPath = 'assets/images/profile.JPG';
 
   static List<String> competences = [
     'Programmation web & mobile',
@@ -72,7 +68,8 @@ class CvData {
     },
     {
       'date': 'Septembre 2024',
-      'title': 'Formation certifiée en installation de caméras et contrôle d\'accès',
+      'title':
+          'Formation certifiée en installation de caméras et contrôle d\'accès',
       'org': 'Hikvision',
     },
     {
@@ -80,12 +77,5 @@ class CvData {
       'title': 'Certification en administration réseau',
       'org': 'Centre professionnel de l\'ISIG',
     },
-  ];
-
-  static List<Map<String, String>> family = [
-    {'name': 'Muzandwa', 'relation': 'Père', 'job': 'Ingénieur'},
-    {'name': 'Maman', 'relation': 'Mère', 'job': 'Enseignante'},
-    {'name': 'Junior', 'relation': 'Frère', 'job': 'Étudiant'},
-    {'name': 'Sarha', 'relation': 'Sœur', 'job': 'Élève'},
   ];
 }

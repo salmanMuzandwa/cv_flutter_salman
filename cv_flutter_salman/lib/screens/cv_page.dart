@@ -152,8 +152,9 @@ class _CvPageState extends State<CvPage> {
             icon: Icons.school_outlined,
             title: 'Formation',
             child: Column(
-              children:
-                  CvData.education.map((e) => _EducationCard(edu: e)).toList(),
+              children: CvData.education
+                  .map((e) => _EducationCard(edu: e))
+                  .toList(),
             ),
           ),
           const SizedBox(height: 16),
@@ -296,21 +297,30 @@ class _CvPageState extends State<CvPage> {
             child: Text(
               CvData.title,
               style: const TextStyle(
-                  fontFamily: 'sans-serif', color: Colors.white, fontSize: 14),
+                fontFamily: 'sans-serif',
+                color: Colors.white,
+                fontSize: 14,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.location_on_outlined,
-                  color: Colors.white70, size: 16),
+              const Icon(
+                Icons.location_on_outlined,
+                color: Colors.white70,
+                size: 16,
+              ),
               const SizedBox(width: 4),
-              Text(CvData.location,
-                  style: const TextStyle(
-                      fontFamily: 'sans-serif',
-                      color: Colors.white70,
-                      fontSize: 13)),
+              Text(
+                CvData.location,
+                style: const TextStyle(
+                  fontFamily: 'sans-serif',
+                  color: Colors.white70,
+                  fontSize: 13,
+                ),
+              ),
             ],
           ),
         ],
@@ -343,18 +353,23 @@ class _CvPageState extends State<CvPage> {
         spacing: 8,
         runSpacing: 8,
         children: CvData.competences
-            .map((s) => Chip(
-                  label: Text(s,
-                      style: const TextStyle(
-                          fontFamily: 'sans-serif', fontSize: 13)),
-                  backgroundColor: AppColors.light,
-                  labelStyle:
-                      const TextStyle(color: AppColors.primaryDark),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide.none,
+            .map(
+              (s) => Chip(
+                label: Text(
+                  s,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    fontSize: 13,
                   ),
-                ))
+                ),
+                backgroundColor: AppColors.light,
+                labelStyle: const TextStyle(color: AppColors.primaryDark),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide.none,
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -366,19 +381,28 @@ class _CvPageState extends State<CvPage> {
       title: 'Langues',
       child: Row(
         children: CvData.languages
-            .map((l) => Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.check_circle,
-                          color: AppColors.accent, size: 18),
-                      const SizedBox(width: 6),
-                      Text(l,
-                          style: const TextStyle(
-                              fontFamily: 'sans-serif', fontSize: 15)),
-                    ],
-                  ),
-                ))
+            .map(
+              (l) => Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: AppColors.accent,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      l,
+                      style: const TextStyle(
+                        fontFamily: 'sans-serif',
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -445,28 +469,40 @@ class _EducationCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(edu['period']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        color: AppColors.accent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13)),
+                Text(
+                  edu['period']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    color: AppColors.accent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
                 const SizedBox(height: 2),
-                Text(edu['school']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15)),
+                Text(
+                  edu['school']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
                 const SizedBox(height: 2),
-                Text(edu['degree']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        color: AppColors.textMuted)),
-                Text(edu['detail']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        color: AppColors.textMuted,
-                        fontSize: 12)),
+                Text(
+                  edu['degree']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    color: AppColors.textMuted,
+                  ),
+                ),
+                Text(
+                  edu['detail']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    color: AppColors.textMuted,
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
           ),
@@ -485,19 +521,25 @@ class _ExperienceCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(exp['role']!,
-            style: const TextStyle(
-                fontFamily: 'sans-serif',
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: AppColors.primaryDark)),
+        Text(
+          exp['role']!,
+          style: const TextStyle(
+            fontFamily: 'sans-serif',
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            color: AppColors.primaryDark,
+          ),
+        ),
         const SizedBox(height: 8),
-        Text(exp['tasks']!,
-            style: const TextStyle(
-                fontFamily: 'sans-serif',
-                color: AppColors.textMuted,
-                height: 1.6,
-                fontSize: 13.5)),
+        Text(
+          exp['tasks']!,
+          style: const TextStyle(
+            fontFamily: 'sans-serif',
+            color: AppColors.textMuted,
+            height: 1.6,
+            fontSize: 13.5,
+          ),
+        ),
       ],
     );
   }
@@ -514,29 +556,41 @@ class _FormationCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.fiber_manual_record,
-              size: 12, color: AppColors.accent),
+          const Icon(
+            Icons.fiber_manual_record,
+            size: 12,
+            color: AppColors.accent,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(f['date']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        color: AppColors.accent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13)),
-                Text(f['title']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14)),
-                Text(f['org']!,
-                    style: const TextStyle(
-                        fontFamily: 'sans-serif',
-                        color: AppColors.textMuted,
-                        fontSize: 12.5)),
+                Text(
+                  f['date']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    color: AppColors.accent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+                Text(
+                  f['title']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  f['org']!,
+                  style: const TextStyle(
+                    fontFamily: 'sans-serif',
+                    color: AppColors.textMuted,
+                    fontSize: 12.5,
+                  ),
+                ),
               ],
             ),
           ),

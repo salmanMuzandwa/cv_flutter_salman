@@ -3,11 +3,11 @@ import 'constants.dart';
 import 'screens/login_page.dart';
 
 void main() {
-  runApp(const CvApp());
+  runApp(const MonCvApp());
 }
 
-class CvApp extends StatelessWidget {
-  const CvApp({super.key});
+class MonCvApp extends StatelessWidget {
+  const MonCvApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,10 @@ class CvApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(color: AppColors.divider),
